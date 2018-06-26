@@ -15,17 +15,23 @@ public class BatteryReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        if (intent ==null)
+        {
+            return;
+        }
         final String action = intent.getAction();
         if(action.equalsIgnoreCase(Intent.ACTION_BATTERY_CHANGED))
         {
             Log.i("james-fan","get battery change broad");
+            mCurrentLevel = intent.getExtras().getInt("level");// 获得当前电量
+            m_total = intent.getExtras().getInt("scale");// 获得总电量
+            int percent = mCurrentLevel * 100 / m_total;
+            m_strPercent =percent+ "%";
         }
         // mCurrentLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
         //m_total = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-        mCurrentLevel = intent.getExtras().getInt("level");// 获得当前电量
-        m_total = intent.getExtras().getInt("scale");// 获得总电量
-        int percent = mCurrentLevel * 100 / m_total;
-        m_strPercent =percent+ "%";
+
     }
 
 
